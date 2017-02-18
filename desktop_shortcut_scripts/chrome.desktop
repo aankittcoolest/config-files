@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.1.1
+Type=Application
+Name=Google Chrome
+Exec=google-chrome --no-sandbox
+Icon=/opt/google/chrome/product_logo_64.png
+Comment=Test comment
+Categories=Browser;
+Terminal=false
+StartupNotify=true

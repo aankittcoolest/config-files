@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.1.1
+Type=Application
+Name=JetBrains PhpStorm
+Exec=/opt/PhpStorm/bin/phpstorm.sh %f
+Icon=/opt/PhpStorm/bin/phpstorm.png
+Comment=Develop with pleasure!
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+StartupWMClass=jetbrains-phpstorm
