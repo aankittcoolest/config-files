@@ -1,5 +1,4 @@
 set nocompatible
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 filetype off
 
 execute pathogen#infect()
@@ -53,9 +52,8 @@ augroup javascriptcmds
 augroup END
 
 augroup phpcmds
-	autocmd Filetype php nnoremap <buffer> <leader>r :!phpunit %<cr>
+	autocmd Filetype php nnoremap <buffer> <leader>p :!phpunit %<cr>
 	autocmd Filetype php nnoremap <buffer> <leader>v o var_dump(); die();<esc>0 f)
-	autocmd Filetype php nnoremap <buffer> <leader>p :!php main_panel.php<esc>
 augroup END
 
 "Remove mapping for arrow keys
@@ -65,15 +63,14 @@ noremap <up> <nop>
 noremap <down> <nop>
 imap jj <esc>
 
+"Configure NERDTree
+nnoremap <buffer> <leader>n :NERDTree<cr>
+
 "Move easier between splitted screens
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-"Enable CtrlP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
 
 :filetype plugin on
 
@@ -86,8 +83,10 @@ Plugin '2072/PHP-Indenting-for-VIm'
 Plugin 'kien/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
 Plugin 'yegappan/mru'
 Plugin 'shemerey/vim-peepopen'
+Plugin 'tomtom/tcomment_vim'
 
 
 
