@@ -1,0 +1,2 @@
+/icon "%userprofile%\.babun\cygwin\bin\mintty.exe" /dir "%userprofile%"
+%userprofile%\.babun\cygwin\bin\mintty.exe -
