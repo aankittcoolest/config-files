@@ -66,6 +66,23 @@ imap jj <esc>
 "Configure NERDTree
 nnoremap <buffer> <leader>n :NERDTree<cr>
 
+"Configure to close window or screen
+nnoremap :qq :q!<cr> 
+
+"Reconfigure command to open recent files
+nnoremap :mru :MRU<cr>
+
+"Reconfigure NERDTree to show hidden files
+let NERDTreeShowHidden=1
+
+"Reconfigure CtrlP to show hidden files
+let g:ctrlp_show_hidden = 1
+
+"Enable powerline fonts | Add some fanciness to tabs
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 "Move easier between splitted screens
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
