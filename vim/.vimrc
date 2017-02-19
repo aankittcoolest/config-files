@@ -104,6 +104,12 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'yegappan/mru'
 Plugin 'shemerey/vim-peepopen'
 Plugin 'tomtom/tcomment_vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'jreybert/vimagit'
+" Plugin 'airblade/vim-gitgutter'
+Plugin 'Shougo/vimshell.vim'
+Plugin 'Shougo/vimproc.vim'
 
 
 
