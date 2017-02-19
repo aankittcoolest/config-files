@@ -4,7 +4,6 @@ Columns=150
 Rows=55
 Font=DejaVu Sans Mono for Powerline
 FontHeight=10
-Transparency=low
 
 ForegroundColour=#A0A0A0
 BackgroundColour=#1B1D1E
