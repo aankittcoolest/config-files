@@ -13,6 +13,7 @@ set gdefault
 set hlsearch
 set incsearch
 set colorcolumn=110
+set clipboard=unnamed
 
 "configure syntastic settings
 set statusline+=%#warningmsg#
@@ -63,6 +64,9 @@ noremap <up> <nop>
 noremap <down> <nop>
 imap jj <esc>
 
+"Map for copying to windows clipboard
+nnoremap <leader>y "+y
+
 "Configure NERDTree
 nnoremap <buffer> <leader>n :NERDTree<cr>
 
@@ -70,7 +74,13 @@ nnoremap <buffer> <leader>n :NERDTree<cr>
 nnoremap :qq :q!<cr> 
 
 "Reconfigure command to open recent files
-nnoremap :mru :MRU<cr>
+nnoremap :mru :MRU<cr>terryma/vim-multiple-cursors
+
+"Map PluginInstall Command
+nnoremap :PI :PluginInstall<cr>
+
+"Map VimShell Command
+nnoremap :shell :VimShellTab<cr>
 
 "Reconfigure NERDTree to show hidden files
 let NERDTreeShowHidden=1
@@ -110,6 +120,8 @@ Plugin 'jreybert/vimagit'
 " Plugin 'airblade/vim-gitgutter'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/vimproc.vim'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Shougo/unite.vim'
 
 
 
