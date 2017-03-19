@@ -24,7 +24,7 @@ let g:syntastic_always_poplulate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
+let g:syntastic_quiet_messages = { "type": "style" }
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
@@ -117,7 +117,7 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jreybert/vimagit'
-" Plugin 'airblade/vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'terryma/vim-multiple-cursors'
