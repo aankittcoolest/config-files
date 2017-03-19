@@ -1,0 +1,73 @@
+set nocompatible
+filetype off
+
+syntax on
+filetype indent on
+let mapleader=','
+set smartindent
+set scrolloff=5
+set wildmenu
+set gdefault
+set hlsearch
+set incsearch
+colorscheme desert
+
+"nnoremap / /\v
+"vnoremap / /\v
+"nnoremap ? ?\v
+"vnoremap ? ?\v
+
+"switch between splitted files
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap <C-H> <C-W>h
+
+nnoremap <leader><space> :noh<cr>
+
+if has('win64')
+	" avoid mswin.vim making ctrl-v act as paste
+	noremap <c-v> <c-v>
+endif
+
+"formats html on file read and write
+autocmd bufread,bufwritepre *.html normal gg=g
+
+augroup htmlscriptcmds
+	autocmd filetype html nnoremap <buffer> <leader>c i<!--<esc>a--><esc>
+	autocmd filetype html setlocal tabstop=2 shiftwidth=2 softtabstop=2
+augroup end
+
+augroup javascriptcmds
+	autocmd!
+	autocmd Filetype javascript nnoremap <buffer> <leader>r :!node %<cr>
+	autocmd Filetype javascript nnoremap <buffer> <leader>c I//<esc>
+	autocmd Filetype javascript setlocal tabstop=4 shiftwidth=4 softtabstop=4
+augroup END
+
+augroup phpcmds
+	autocmd Filetype php nnoremap <buffer> <leader>r :w<CR>:!cd /var/www/vhosts/aagrawal/test/mygaba-pc/tests/ && phpunit ../library/MyGaba/Test/Table/Gabaweb/OnlineServiceTest.php<CR>
+	autocmd Filetype php nnoremap <buffer> <leader>v o var_dump(); die();<esc>0 f)
+augroup END
+
+"Remove unwanted spaces in a file
+nnoremap <buffer> <leader>s :%s/\s\+$//e<CR> 
+
+nnoremap <buffer> <leader>v o var_dump(); die();<esc>0 f)i
+noremap <left> <nop>
+noremap <right> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+imap jj <esc>
+
+
+     map <F5> <Esc>:EnableFastPHPFolds<Cr> 
+      map <F6> <Esc>:EnablePHPFolds<Cr> 
+      map <F7> <Esc>:DisablePHPFolds<Cr> 
+
+"bundle commands
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin '2072/PHP-Indenting-for-VIm'
