@@ -122,6 +122,7 @@ Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Shougo/unite.vim'
+Plugin 'tpope/vim-fugitive'
 
 
 
