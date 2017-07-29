@@ -72,6 +72,7 @@ nnoremap <buffer> <leader>n :NERDTree<cr>
 
 "Configure to close window or screen
 nnoremap :qq :q!<cr> 
+nnoremap :wq :wq!<cr>
 
 "Reconfigure command to open recent files
 nnoremap :mru :MRU<cr>terryma/vim-multiple-cursors
@@ -98,6 +99,18 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+
+
+""""""""""""""""""""""""""""""""""""""""
+"" Import external language specific configurations
+""""""""""""""""""""""""""""""""""""""""
+source java.vim
+
+
+""""""""""""""""""""""""""""""""""""""""
+"" Extenal Plugins
+""""""""""""""""""""""""""""""""""""""""
 
 :filetype plugin on
 
