@@ -105,7 +105,7 @@ nnoremap <C-H> <C-W><C-H>
 """"""""""""""""""""""""""""""""""""""""
 "" Import external language specific configurations
 """"""""""""""""""""""""""""""""""""""""
-source java.vim
+source ~/config-files/vim/java.vim
 
 
 """"""""""""""""""""""""""""""""""""""""
@@ -134,8 +134,10 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Shougo/unite.vim'
+" Plugin 'Shougo/unite.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'henrik/vim-open-url'
+Plugin 'metakirby5/codi.vim'
 
 
 
