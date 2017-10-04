@@ -138,6 +138,9 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-fugitive'
 Plugin 'henrik/vim-open-url'
 Plugin 'metakirby5/codi.vim'
+Plugin 'tyru/open-browser.vim'
 
-
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 
