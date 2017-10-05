@@ -106,6 +106,7 @@ nnoremap <C-H> <C-W><C-H>
 "" Import external language specific configurations
 """"""""""""""""""""""""""""""""""""""""
 source ~/config-files/vim/java.vim
+source ~/config-files/vim/copyPatternResults.vim
 
 
 """"""""""""""""""""""""""""""""""""""""
