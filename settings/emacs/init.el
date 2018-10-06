@@ -27,7 +27,7 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(package-selected-packages
    (quote
-    (let-alist pdf-tools ace-window org-bullets which-key use-package try))))
+    (zenburn-theme evil magit let-alist pdf-tools ace-window org-bullets which-key use-package try))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -96,6 +96,42 @@
          
 (setq dired-guess-shell-alist-user '(("\\.txt\\" "\/mnt\/c\/Program\\ Files\\ \\(x86\\)\/Notepad++\/notepad++.exe")))
 
+(add-hook 'dired-load-hook
+	  (lambda ()
+	    (load "dired-x")
+	    ;; Set dired-x global variables here.  For example:
+	    ;; (setq dired-guess-shell-gnutar "gtar")
+	    ;; (setq dired-x-hands-off-my-keys nil)
+	    ))
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    ;; Set dired-x buffer-local variables here.  For example:
+	    ;; (dired-omit-mode 1)
+	                     ))
+
+
+(setq dired-guess-shell-alist-user '(("\\.txt$" "\/mnt\/c\/Program\\ Files\\ \\(x86\\)\/Notepad++\/notepad++.exe ")))
+
+;;bind refresh packages to F1
+(global-set-key (kbd "<f12>") 'package-refresh-contents)
+(global-set-key (kbd  "<f5>") 'revert-buffer)
+(global-set-key (kbd "C-x p") 'find-file-at-point)
+
+;;set up evil mode inside emacs
+(use-package evil
+  :ensure t)
+(evil-mode 1)
+
+;;define function to kill buffer without prompt if it is not modified.
+(defun volatile-kill-buffer ()
+  (interactive)
+  (let ((buffer-modified-p nil))
+    (kill-buffer (current-buffer))))
+
+(global-set-key (kbd "C-x k") 'volatile-kill-buffer)
+
+;;change all prompts to y or n
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; install pdf viewer
 (use-package pdf-tools
@@ -105,3 +141,26 @@
 
 (use-package org-pdfview
   :ensure t)
+
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+
+;; set a default font
+(when (member "DejaVu Sans Mono" (font-family-list))
+        (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+
+
+(menu-bar-mode -1)
+(setq-default mode-line-format nil)
+
+;;let's talk about themes
+;;(use-package zenburn-theme
+;;  :ensure t)
+
+(setq initial-scratch-message ";; Hello Ankit!")
