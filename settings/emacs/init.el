@@ -94,3 +94,14 @@
      browse-url-generic-args     cmdExeArgs
      browse-url-browser-function 'browse-url-generic)
          
+(setq dired-guess-shell-alist-user '(("\\.txt\\" "\/mnt\/c\/Program\\ Files\\ \\(x86\\)\/Notepad++\/notepad++.exe")))
+
+
+;; install pdf viewer
+(use-package pdf-tools
+	     :ensure t
+	     :config
+	     (pdf-tools-install))
+
+(use-package org-pdfview
+  :ensure t)
