@@ -1,0 +1,197 @@
+#+STARTUP: hidell
+
+* Remove startup messages and status line windows
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t)
+(menu-bar-mode -1)
+(setq-default mode-line-format nil)
+(setq initial-scratch-message ";; Hello Ankit!")
+
+;;change all prompts to y or n
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;;follow symlinks
+(setq vc-follow-symlinks t)
+#+END_SRC
+
+
+* Keyboard mappings
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f12>") 'package-refresh-contents)
+(global-set-key (kbd  "<f5>") 'revert-buffer)
+(global-set-key (kbd "C-x p") 'find-file-at-point)
+#+END_SRC
+
+
+* Initialize package and install a package installer helper
+#+BEGIN_SRC emacs-lisp
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+END_SRC
+
+
+* Install some helping packages (try and which)
+#+BEGIN_SRC emacs-lisp
+(use-package try
+  :ensure t)
+
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+#+END_SRC
+
+
+* Packages for org-mode
+#+BEGIN_SRC emacs-lisp
+;;bullets package to show fancy bullets
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+
+
+* Utility packages for faster moving around
+#+BEGIN_SRC emacs-lisp
+;;ace-window: package to switch windows quickly
+(use-package ace-window
+  :ensure t
+  :init
+  (progn
+    (global-set-key [remap other-window] 'ace-window)
+    (custom-set-faces
+     '(aw-leading-char-face
+       ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+    ))
+    
+
+;;install ace-jump
+(use-package ace-jump-mode
+  :ensure t)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+#+END_SRC
+
+
+* Evil mode packages and settings
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-C-i-jump nil)
+(use-package evil
+  :ensure t)
+(evil-mode 1)
+(define-key evil-normal-state-map "\C-q" 'evil-visual-block)
+#+END_SRC
+
+
+* Utilities to increase ability of emacs
+#+BEGIN_SRC emacs-lisp
+;;auto complete package
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)
+    ))
+
+;; install pdf viewer
+(use-package pdf-tools
+	     :ensure t
+	     :config
+	     (pdf-tools-install))
+
+(use-package org-pdfview
+  :ensure t)
+#+END_SRC
+
+
+* Customized settings for emacs
+#+BEGIN_SRC emacs-lisp
+;;define function to kill buffer without prompt if it is not modified.
+(defun volatile-kill-buffer ()
+  (interactive)
+  (let ((buffer-modified-p nil))
+    (kill-buffer (current-buffer))))
+
+(global-set-key (kbd "C-x k") 'volatile-kill-buffer)
+
+;;set up things as UTF-8
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+;; set a default font
+(when (member "DejaVu Sans Mono" (font-family-list))
+        (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+
+#+END_SRC
+
+
+* Browser and link related packages
+#+BEGIN_SRC emacs-lisp
+
+(setq browse-url-browser-function 'browse-url-generic
+            browse-url-generic-program "google-chrome")
+
+;; Determine the specific system type.
+;; Emacs variable system-type doesn't yet have a "wsl/linux" value,
+;; so I'm front-ending system-type with my variable: sysTypeSpecific.
+;; I'm no elisp hacker, so I'm diverging from the elisp naming convention
+;; to ensure that I'm not stepping on any pre-existing variable.
+(setq-default sysTypeSpecific  system-type) ;; get the system-type value
+
+(cond
+ ;; If type is "gnu/linux", override to "wsl/linux" if it's WSL.
+ ((eq sysTypeSpecific 'gnu/linux)
+  (when (string-match "Linux.*Microsoft.*Linux"
+		      (shell-command-to-string "uname -a"))
+
+    (setq-default sysTypeSpecific "wsl/linux") ;; for later use.
+    (setq
+     cmdExeBin"/mnt/c/Windows/System32/cmd.exe"
+     cmdExeArgs '("/c" "start" "") )
+    (setq
+     browse-url-generic-program  cmdExeBin
+     browse-url-generic-args     cmdExeArgs
+     browse-url-browser-function 'browse-url-generic)
+         )))
+(setq
+     cmdExeBin"/mnt/c/Windows/System32/cmd.exe"
+     cmdExeArgs '("/c" "start" "") )
+    (setq
+     browse-url-generic-program  cmdExeBin
+     browse-url-generic-args     cmdExeArgs
+     browse-url-browser-function 'browse-url-generic)
+
+#+END_SRC
+
+
+* Dired mode related settings
+#+BEGIN_SRC emacs-lisp
+;; enable dired-mode-x
+(add-hook 'dired-load-hook
+	  (lambda ()
+	    (load "dired-x")
+	    ;; Set dired-x global variables here.  For example:
+	    ;; (setq dired-guess-shell-gnutar "gtar")
+	    ;; (setq dired-x-hands-off-my-keys nil)
+	    ))
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    ;; Set dired-x buffer-local variables here.  For example:
+	    ;; (dired-omit-mode 1)
+	                     ))
+
+;;SAMPLE: open text files in notepad++
+(setq dired-guess-shell-alist-user '(("\\.txt$" "\/mnt\/c\/Program\\ Files\\ \\(x86\\)\/Notepad++\/notepad++.exe ")))
+#+END_SRC
+
+* Theme related setting
+#+BEGIN_SRC emacs-lisp
+(load-theme 'tango-dark t)
+#+END_SRC
