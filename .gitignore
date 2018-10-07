@@ -4,3 +4,6 @@
 
 #Ignore swap temp files
 .*.swp
+
+#Ignore compiled file of emacs
+settings/emacs/myinit.el
