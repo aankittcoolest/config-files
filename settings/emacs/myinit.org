@@ -1,4 +1,4 @@
-#+STARTUP: hidell
+#+STARTUP: overview
 
 * Remove startup messages and status line windows
 #+BEGIN_SRC emacs-lisp
@@ -45,13 +45,31 @@
 
 
 * Packages for org-mode
+  SCHEDULED: <2018-10-08 Mon>
 #+BEGIN_SRC emacs-lisp
 ;;bullets package to show fancy bullets
 (use-package org-bullets
   :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  
+;;enable specific languages for org mode
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((shell . t)))
+
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (member lang '("shell" "emacs-lisp"))))
+
+(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)))
 #+END_SRC
+
+#+RESULTS:
+| (lambda nil (local-set-key (kbd  SPC) (quote ace-jump-mode))) | (lambda nil (org-bullets-mode 1)) | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-block-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 
 * Utility packages for faster moving around
@@ -95,6 +113,7 @@
     (ac-config-default)
     (global-auto-complete-mode t)
     ))
+    (define-key ac-mode-map (kbd "M-/") 'auto-complete)
 
 ;; install pdf viewer
 (use-package pdf-tools
@@ -105,6 +124,8 @@
 (use-package org-pdfview
   :ensure t)
 #+END_SRC
+
+#+RESULTS:
 
 
 * Customized settings for emacs
@@ -191,7 +212,49 @@
 (setq dired-guess-shell-alist-user '(("\\.txt$" "\/mnt\/c\/Program\\ Files\\ \\(x86\\)\/Notepad++\/notepad++.exe ")))
 #+END_SRC
 
+
 * Theme related setting
 #+BEGIN_SRC emacs-lisp
 (load-theme 'tango-dark t)
+#+END_SRC
+
+
+* Reveal js
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-reveal
+  :ensure t)
+
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+  (setq org-reveal-mathjax t)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+
+* Atomic chrome
+#+BEGIN_SRC emacs-lisp
+  (use-package atomic-chrome
+  :ensure t
+  :config
+  (atomic-chrome-start-server))
+  ;; (setq atomic-chrome-default-major-mode 'markdown-mode)
+#+END_SRC
+
+
+* Projectile (fuzzy-search)
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+:ensure t)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+#+END_SRC
+
+
+* mu4e Mailing stuffs
+#+BEGIN_SRC emacs-lisp
+(use-package org-mime
+  :ensure t)
+(load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
