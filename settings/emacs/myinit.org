@@ -66,10 +66,13 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)))
+	    
+(use-package htmlize
+   :ensure t)
 #+END_SRC
 
 #+RESULTS:
-| (lambda nil (local-set-key (kbd  SPC) (quote ace-jump-mode))) | (lambda nil (org-bullets-mode 1)) | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-block-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
+: t
 
 
 * Utility packages for faster moving around
@@ -100,6 +103,10 @@
   :ensure t)
 (evil-mode 1)
 (define-key evil-normal-state-map "\C-q" 'evil-visual-block)
+
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define ml-state)
+(key-chord-mode 1)
 #+END_SRC
 
 
@@ -258,3 +265,11 @@
   :ensure t)
 (load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
+
+* Copy and paste on windows
+#+BEGIN_SRC emacs-lisp
+(setq x-select-enable-clipboard t)
+#+END_SRC
+
+#+RESULTS:
+: t
