@@ -104,9 +104,9 @@
 (evil-mode 1)
 (define-key evil-normal-state-map "\C-q" 'evil-visual-block)
 
-(setq key-chord-two-keys-delay 0.5)
-(key-chord-define ml-state)
-(key-chord-mode 1)
+;;(setq key-chord-two-keys-delay 0.5)
+;;(key-chord-define ml-state)
+;;(key-chord-mode 1)
 #+END_SRC
 
 
@@ -263,7 +263,7 @@
 #+BEGIN_SRC emacs-lisp
 (use-package org-mime
   :ensure t)
-(load-file "~/config-files/settings/emacs/mu4econfig.el")
+;;(load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
 
 * Copy and paste on windows
@@ -273,3 +273,19 @@
 
 #+RESULTS:
 : t
+
+* Keyboard map shell commands
+#+BEGIN_SRC emacs-lisp
+(defun todo ()
+ "lists the contents of current directory"
+ (interactive)
+ (insert (shell-command-to-string "sh ~/config-files/settings/emacs/todo_template.sh")))
+
+(global-set-key (kbd "C-x t") 'todo)
+#+END_SRC 
+
+* Map keyboard regex commands
+#+BEGIN_SRC emacs-lisp
+(fset 'done
+   ":s/\\([ ]+\\)\\(.*\\)/\\1+\\2+\C-m")
+#+END_SRC
