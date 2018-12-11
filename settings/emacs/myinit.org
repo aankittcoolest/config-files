@@ -4,6 +4,8 @@
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message t)
 (menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
 (setq-default mode-line-format nil)
 (setq initial-scratch-message ";; Hello Ankit!")
 
@@ -123,13 +125,13 @@
     (define-key ac-mode-map (kbd "M-/") 'auto-complete)
 
 ;; install pdf viewer
-(use-package pdf-tools
-	     :ensure t
-	     :config
-	     (pdf-tools-install))
-
-(use-package org-pdfview
-  :ensure t)
+;;(use-package pdf-tools
+;;	     :ensure t
+;;	     :config
+;;	     (pdf-tools-install))
+;;
+;;(use-package org-pdfview
+;;  :ensure t)
 #+END_SRC
 
 #+RESULTS:
@@ -156,6 +158,7 @@
 ;; set a default font
 (when (member "DejaVu Sans Mono" (font-family-list))
         (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+(set-face-attribute 'default nil :height 160)
 
 #+END_SRC
 
@@ -163,38 +166,41 @@
 * Browser and link related packages
 #+BEGIN_SRC emacs-lisp
 
-(setq browse-url-browser-function 'browse-url-generic
-            browse-url-generic-program "google-chrome")
+;;Commenting out these lines to check out mac default browser(chrome)
+;;(setq browse-url-browser-function 'browse-url-generic
+;;            browse-url-generic-program "google-chrome")
+(setq browse-url-browser-function 'browse-url-default-macosx-browser)
 
-;; Determine the specific system type.
-;; Emacs variable system-type doesn't yet have a "wsl/linux" value,
+
+
+;; Determine the specific system type. ;; Emacs variable system-type doesn't yet have a "wsl/linux" value,
 ;; so I'm front-ending system-type with my variable: sysTypeSpecific.
 ;; I'm no elisp hacker, so I'm diverging from the elisp naming convention
 ;; to ensure that I'm not stepping on any pre-existing variable.
-(setq-default sysTypeSpecific  system-type) ;; get the system-type value
-
-(cond
- ;; If type is "gnu/linux", override to "wsl/linux" if it's WSL.
- ((eq sysTypeSpecific 'gnu/linux)
-  (when (string-match "Linux.*Microsoft.*Linux"
-		      (shell-command-to-string "uname -a"))
-
-    (setq-default sysTypeSpecific "wsl/linux") ;; for later use.
-    (setq
-     cmdExeBin"/mnt/c/Windows/System32/cmd.exe"
-     cmdExeArgs '("/c" "start" "") )
-    (setq
-     browse-url-generic-program  cmdExeBin
-     browse-url-generic-args     cmdExeArgs
-     browse-url-browser-function 'browse-url-generic)
-         )))
-(setq
-     cmdExeBin"/mnt/c/Windows/System32/cmd.exe"
-     cmdExeArgs '("/c" "start" "") )
-    (setq
-     browse-url-generic-program  cmdExeBin
-     browse-url-generic-args     cmdExeArgs
-     browse-url-browser-function 'browse-url-generic)
+;;(setq-default sysTypeSpecific  system-type) ;; get the system-type value
+;;
+;;(cond
+;; ;; If type is "gnu/linux", override to "wsl/linux" if it's WSL.
+;; ((eq sysTypeSpecific 'gnu/linux)
+;;  (when (string-match "Linux.*Microsoft.*Linux"
+;;		      (shell-command-to-string "uname -a"))
+;;
+;;    (setq-default sysTypeSpecific "wsl/linux") ;; for later use.
+;;    (setq
+;;     cmdExeBin"/mnt/c/Windows/System32/cmd.exe"
+;;     cmdExeArgs '("/c" "start" "") )
+;;    (setq
+;;     browse-url-generic-program  cmdExeBin
+;;     browse-url-generic-args     cmdExeArgs
+;;     browse-url-browser-function 'browse-url-generic)
+;;         )))
+;;(setq
+;;     cmdExeBin"/mnt/c/Windows/System32/cmd.exe"
+;;     cmdExeArgs '("/c" "start" "") )
+;;    (setq
+;;     browse-url-generic-program  cmdExeBin
+;;     browse-url-generic-args     cmdExeArgs
+;;     browse-url-browser-function 'browse-url-generic)
 
 #+END_SRC
 
@@ -217,6 +223,11 @@
 
 ;;SAMPLE: open text files in notepad++
 (setq dired-guess-shell-alist-user '(("\\.txt$" "\/mnt\/c\/Program\\ Files\\ \\(x86\\)\/Notepad++\/notepad++.exe ")))
+
+(defun xah-dired-mode-setup ()
+  "to be run as hook for 'dired-mode'."
+  (dired-hide-details-mode 1))
+(add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 #+END_SRC
 
 
@@ -261,8 +272,8 @@
 
 * mu4e Mailing stuffs
 #+BEGIN_SRC emacs-lisp
-(use-package org-mime
-  :ensure t)
+;;(use-package org-mime
+;;  :ensure t)
 ;;(load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
 
@@ -288,4 +299,92 @@
 #+BEGIN_SRC emacs-lisp
 (fset 'done
    ":s/\\([ ]+\\)\\(.*\\)/\\1+\\2+\C-m")
+
+* Set up calendar to set up current date
+#+BEGIN_SRC emacs-lisp
+(use-package calendar
+    :ensure t)
+
+;;(defun insdate-insert-current-date (&optional omit-day-of-week-p)
+;;  "Insert today's date using the current locale.
+;;   With tha prefix argument, the date is inserted without the day
+;;   of the week."
+;;   (interactive "p*")
+;;   (insert (calendar-date-string (calendar-current-date) nil
+;;                                 omit-day-of-week-p)))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun xah-insert-date ()
+  "Insert current date time.
+Insert date in this format: yyyy-mm-dd.
+When called with `universal-argument', prompt for a format to use.
+If there's text selection, delete it first.
+
+URL `http://ergoemacs.org/emacs/elisp_insert-date-time.html'
+version 2018-07-03"
+  (interactive)
+  (let (($style
+         (if current-prefix-arg
+             (string-to-number
+              (substring
+               (ido-completing-read
+                "Style:"
+                '(
+                  "1 → 2018-04-12 Thursday"
+                  "2 → 20180412224611"
+                  "3 → 2018-04-12T22:46:11-07:00"
+                  "4 → 2018-04-12 22:46:11-07:00"
+                  "5 → Thursday, April 12, 2018"
+                  "6 → Thu, Apr 12, 2018"
+                  "7 → April 12, 2018"
+                  "8 → Apr 12, 2018"
+                  )) 0 1))
+           0
+           )))
+    (when (use-region-p) (delete-region (region-beginning) (region-end)))
+    (insert
+     (cond
+      ((= $style 0)
+       ;; "2016-10-10"
+       (format-time-string "%Y-%m-%d"))
+      ((= $style 1)
+       ;; "2018-04-12 Thursday"
+
+       (format-time-string "%Y-%m-%d %A"))
+      ((= $style 2)
+       ;; "20180412224015"
+       (replace-regexp-in-string ":" "" (format-time-string "%Y%m%d%T")))
+      ((= $style 3)
+       (concat
+        (format-time-string "%Y-%m-%dT%T")
+        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
+       ;; "2018-04-12T22:45:26-07:00"
+       )
+      ((= $style 4)
+       (concat
+        (format-time-string "%Y-%m-%d %T")
+        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
+       ;; "2018-04-12 22:46:11-07:00"
+       )
+      ((= $style 5)
+       (format-time-string "%A, %B %d, %Y")
+       ;; "Thursday, April 12, 2018"
+       )
+      ((= $style 6)
+       (format-time-string "%a, %b %d, %Y")
+       ;; "Thu, Apr 12, 2018"
+       )
+      ((= $style 7)
+       (format-time-string "%B %d, %Y")
+       ;; "April 12, 2018"
+       )
+      ((= $style 8)
+       (format-time-string "%b %d, %Y")
+       ;; "Apr 12, 2018"
+       )
+      (t
+       (format-time-string "%Y-%m-%d"))))))
+       
 #+END_SRC
