@@ -22,6 +22,8 @@
 (global-set-key (kbd "<f12>") 'package-refresh-contents)
 (global-set-key (kbd  "<f5>") 'revert-buffer)
 (global-set-key (kbd "C-x p") 'find-file-at-point)
+(global-set-key [(meta shift-up)] 'move-line-up)
+(global-set-key [(meta shift-down)] 'move-line-down)
 #+END_SRC
 
 
@@ -100,15 +102,18 @@
 
 * Evil mode packages and settings
 #+BEGIN_SRC emacs-lisp
-(setq evil-want-C-i-jump nil)
-(use-package evil
+  (setq evil-want-C-i-jump nil)
+  (use-package evil
+    :ensure t)
+  (evil-mode 1)
+  (define-key evil-normal-state-map "\C-q" 'evil-visual-block)
+  
+  (use-package key-chord
   :ensure t)
-(evil-mode 1)
-(define-key evil-normal-state-map "\C-q" 'evil-visual-block)
 
-;;(setq key-chord-two-keys-delay 0.5)
-;;(key-chord-define ml-state)
-;;(key-chord-mode 1)
+  (setq key-chord-two-keys-delay 0.5)
+  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+  (key-chord-mode 1)
 #+END_SRC
 
 
@@ -123,6 +128,8 @@
     (global-auto-complete-mode t)
     ))
     (define-key ac-mode-map (kbd "M-/") 'auto-complete)
+    
+(add-to-list 'ac-modes 'org-mode)
 
 ;; install pdf viewer
 ;;(use-package pdf-tools
@@ -152,8 +159,15 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+(set-language-environment "utf-8")
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+(set-buffer-multibyte nil)
+(set-buffer-multibyte t)
+
+(use-package unicode-fonts
+:ensure t)
+(unicode-fonts-setup)
 
 ;; set a default font
 (when (member "DejaVu Sans Mono" (font-family-list))
@@ -285,6 +299,7 @@
 #+RESULTS:
 : t
 
+
 * Keyboard map shell commands
 #+BEGIN_SRC emacs-lisp
 (defun todo ()
@@ -294,6 +309,7 @@
 
 (global-set-key (kbd "C-x t") 'todo)
 #+END_SRC 
+
 
 * Map keyboard regex commands
 #+BEGIN_SRC emacs-lisp
@@ -387,4 +403,24 @@ version 2018-07-03"
       (t
        (format-time-string "%Y-%m-%d"))))))
        
+#+END_SRC
+
+
+* Play with emojis
+#+BEGIN_SRC emacs-lisp
+(use-package emojify
+:ensure t)
+(add-hook 'after-init-hook #'global-emojify-mode)
+
+#+END_SRC
+
+
+* Events-diary
+#+BEGIN_SRC emacs-lisp
+  (diary)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (setq org-agenda-include-diary t)
+  (setq org-agenda-files (list "~/Documents/notes/todo.org"))
+  (setq org-default-notes-file "~/Documents/notes/todo.org")
+
 #+END_SRC
