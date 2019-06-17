@@ -1,10 +1,9 @@
 #+STARTUP: overview
-
 * Remove startup messages and status line windows
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message t)
 (menu-bar-mode -1)
-(toggle-scroll-bar -1)
+;;(toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (setq-default mode-line-format nil)
 (setq initial-scratch-message ";; Hello Ankit!")
@@ -245,11 +244,10 @@
 #+END_SRC
 
 
-* Theme related setting
+* Theme related setting 
 #+BEGIN_SRC emacs-lisp
-(load-theme 'tango-dark t)
-#+END_SRC
-
+ (load-theme 'tango-dark t) 
+#+END_SRC 
 
 * Reveal js
 #+BEGIN_SRC emacs-lisp
@@ -291,6 +289,7 @@
 ;;(load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
 
+
 * Copy and paste on windows
 #+BEGIN_SRC emacs-lisp
 (setq x-select-enable-clipboard t)
@@ -315,6 +314,8 @@
 #+BEGIN_SRC emacs-lisp
 (fset 'done
    ":s/\\([ ]+\\)\\(.*\\)/\\1+\\2+\C-m")
+#+END_SRC
+
 
 * Set up calendar to set up current date
 #+BEGIN_SRC emacs-lisp
@@ -405,22 +406,46 @@ version 2018-07-03"
        
 #+END_SRC
 
+* Customize colors for TODO items
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+  '((sequence "🔖 TODO" "🏃 IN-PROGRESS" "🗓  MEETING"  "🍻 ATTENDED" "⏱  WAITING" "|" "✅ DONE" "❌ CANCELED"))
+)
 
-* Play with emojis
+(setq org-todo-keyword-faces
+'(("🏃 IN-PROGRESS" . "orange") ("⏱  WAITING" . "magenta")
+\ ("❌ CANCELED" . "red") ("✅ DONE" . "green") ("🗓  MEETING" . "brightyellow") ("🍻 ATTENDED" . "color-231"))
+)
+#+END_SRC
+
+
+* Adding emojis
 #+BEGIN_SRC emacs-lisp
 (use-package emojify
 :ensure t)
 (add-hook 'after-init-hook #'global-emojify-mode)
-
 #+END_SRC
-
 
 * Events-diary
 #+BEGIN_SRC emacs-lisp
-  (diary)
-  (define-key global-map "\C-ca" 'org-agenda)
-  (setq org-agenda-include-diary t)
-  (setq org-agenda-files (list "~/Documents/notes/todo.org"))
-  (setq org-default-notes-file "~/Documents/notes/todo.org")
-
+  ;; (diary)
+  ;; (define-key global-map "\C-ca" 'org-agenda)
+  ;; (setq org-agenda-include-diary t)
+  ;; (setq org-agenda-files (list "~/notes/TODO.org"))
+  ;; (setq org-default-notes-file "~/notes/TODO.org")
 #+END_SRC
+
+* Using edit server
+#+BEGIN_SRC emacs-lisp
+(use-package edit-server
+:ensure t)
+  (when (require 'edit-server nil t)
+    (setq edit-server-new-frame nil)
+    (edit-server-start))
+  (when (and (require 'edit-server nil t) (daemonp))
+    (edit-server-start))
+#+END_SRC
+
+
+* Confluence specific settings
+(org-babel-load-file (expand-file-name "~/config-files/settings/emacs/ox-confluence.el"))
