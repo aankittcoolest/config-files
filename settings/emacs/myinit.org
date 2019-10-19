@@ -25,7 +25,6 @@
 (global-set-key [(meta shift-down)] 'move-line-down)
 #+END_SRC
 
-
 * Initialize package and install a package installer helper
 #+BEGIN_SRC emacs-lisp
 (package-initialize)
@@ -99,13 +98,36 @@
 #+END_SRC
 
 
-* Evil mode packages and settings
+* Vim mappings/similar functionalities Evil mode packages and settings
 #+BEGIN_SRC emacs-lisp
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
+
+  (use-package evil-magit
+  :ensure t)
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+
   (setq evil-want-C-i-jump nil)
   (use-package evil
     :ensure t)
   (evil-mode 1)
   (define-key evil-normal-state-map "\C-q" 'evil-visual-block)
+
+  (use-package neotree
+    :ensure t)
+  
+
   
   (use-package key-chord
   :ensure t)
@@ -113,6 +135,7 @@
   (setq key-chord-two-keys-delay 0.5)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
   (key-chord-mode 1)
+  
 #+END_SRC
 
 
@@ -129,6 +152,11 @@
     (define-key ac-mode-map (kbd "M-/") 'auto-complete)
     
 (add-to-list 'ac-modes 'org-mode)
+
+;;try flyspell
+(use-package auto-dictionary
+  :ensure t)
+(add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))
 
 ;; install pdf viewer
 ;;(use-package pdf-tools
@@ -241,12 +269,20 @@
   "to be run as hook for 'dired-mode'."
   (dired-hide-details-mode 1))
 (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
+
+;;install dired narrow
+  (use-package dired-hacks-utils
+  :ensure t)
 #+END_SRC
 
 
-* Theme related setting 
+
+* Theme/icons related setting 
 #+BEGIN_SRC emacs-lisp
  (load-theme 'tango-dark t) 
+  (use-package all-the-icons
+  :ensure t)
+ (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 #+END_SRC 
 
 * Reveal js
@@ -264,10 +300,9 @@
 
 * Atomic chrome
 #+BEGIN_SRC emacs-lisp
-  (use-package atomic-chrome
-  :ensure t
-  :config
-  (atomic-chrome-start-server))
+(require 'atomic-chrome)
+(atomic-chrome-start-server)
+;;  (setq atomic-chrome-server-ghost-text-port 4002)
   ;; (setq atomic-chrome-default-major-mode 'markdown-mode)
 #+END_SRC
 
@@ -435,17 +470,114 @@ version 2018-07-03"
   ;; (setq org-default-notes-file "~/notes/TODO.org")
 #+END_SRC
 
-* Using edit server
-#+BEGIN_SRC emacs-lisp
-(use-package edit-server
-:ensure t)
-  (when (require 'edit-server nil t)
-    (setq edit-server-new-frame nil)
-    (edit-server-start))
-  (when (and (require 'edit-server nil t) (daemonp))
-    (edit-server-start))
-#+END_SRC
 
 
 * Confluence specific settings
-(org-babel-load-file (expand-file-name "~/config-files/settings/emacs/ox-confluence.el"))
+#+BEGIN_SRC emacs-lisp
+(load-file "~/config-files/settings/emacs/ox-confluence.el")
+#+END_SRC
+
+
+* Adding terminal zsh
+#+BEGIN_SRC emacs-lisp
+(use-package multi-term
+:ensure t)
+(setq multi-term-program "/bin/zsh")
+(global-set-key (kbd "<f9>") 'multi-term)
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;Clear the eshell buffer.
+(defun eshell/clear ()      
+   (let ((eshell-buffer-maximum-lines 0)) (eshell-truncate-buffer)))
+#+END_SRC
+
+#+RESULTS:
+: eshell/clear
+
+* Adding magit/git settings
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+:ensure t)
+#+END_SRC
+
+
+* Remote servers connections
+#+BEGIN_SRC emacs-lisp
+(defun connect-remote ()
+  (interactive)
+  (dired "/ankit.agrawal@10.131.30.58:/"))
+#+END_SRC
+
+
+* org-mode addons
+#+BEGIN_SRC emacs-lisp
+(use-package ox-jira
+:ensure t)
+#+END_SRC
+
+
+
+* configure slack
+- Installing alerts
+#+BEGIN_SRC emacs-lisp
+(use-package alert
+  :commands (alert)
+  :init
+  (setq alert-default-style 'notifier))
+#+END_SRC
+
+- Installing IRC package for emacs
+#+BEGIN_SRC emacs-lisp
+(use-package circe
+:ensure t)
+#+END_SRC
+
+- Enabling oauth2
+#+BEGIN_SRC emacs-lisp
+(load-file "~/config-files/settings/emacs/mu4econfig.el")
+#+END_SRC
+
+- Installing request package for emacs
+#+BEGIN_SRC emacs-lisp
+(use-package request
+:ensure t)
+#+END_SRC
+
+- Installing websocket package for emacs
+#+BEGIN_SRC emacs-lisp
+(use-package websocket
+:ensure t)
+#+END_SRC
+
+- Install emacs-slack
+#+BEGIN_SRC emacs-lisp
+;;(el-get-bundle slack)
+(use-package slack
+  :commands (slack-start)
+  :init
+  :ensure t)
+  (use-package slack
+  :commands (slack-start)
+  :init
+  (setq slack-prefer-current-team t)
+  :config
+  (slack-register-team
+   :name "rakutenmarketing"
+   :default t
+   :client-id "209141811057.713360595590"
+   :client-secret "79ca6b9b8813420de9e73a61169694e0"
+   :subscribed-channels '(rmjp-daily-alerts)
+   :full-and-display-names t))
+  #+END_SRC
+
+
+
+  
+* Different themese for different buffers
+#+BEGIN_SRC emacs-lisp
+(use-package load-theme-buffer-local
+:ensure t)
+#+END_SRC
+
