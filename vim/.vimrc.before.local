@@ -1,0 +1,25 @@
+set encoding=utf-8
+
+"Enable powerline fonts | Add some fanciness to tabs
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+"Remove mapping for arrow keys
+noremap <left> <nop>
+noremap <right> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+imap jj <esc>
+
+let g:airline_theme='dark'
+
+"Configure to close window or screen
+nnoremap :qq :q!<cr> 
+nnoremap :wq :wq!<cr>
+
+"Move easier between splitted screens
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
