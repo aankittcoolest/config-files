@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: html
+# key: <html
+# --
+
+<#part type="text/html" disposition=inline>
+<style>*{font-family: Rakuten Global !important}</style>
+<style>*{font-size: 16px}</style>
+<style>*{color: #4c494f}</style>
+<style>h2 {font-size: 22px}</style>
+<style>h2 {font-weight: 500}</style>
+
+Hello $0, <br>
+
+$1
+
+Regards,<br>
+Ankit Agrawal<br>
+<#/part>

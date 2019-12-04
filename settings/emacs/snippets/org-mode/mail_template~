@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name:mail 
+# key:mail 
+# --
+
+#+OPTIONS: toc:nil num:nil ^:nil date:nil html-postamble:nil
+#+HTML_HEAD_EXTRA: <style>*{font-family: Rakuten Global !important}</style>
+#+HTML_HEAD_EXTRA: <style>*{font-size: 16px}</style>
+#+HTML_HEAD_EXTRA: <style>*{color: #4c494f}</style>
+#+HTML_HEAD_EXTRA: <style>h2 {font-size: 22px}</style>
+#+HTML_HEAD_EXTRA: <style>h2 {font-weight: 500}</style>
+
+$0

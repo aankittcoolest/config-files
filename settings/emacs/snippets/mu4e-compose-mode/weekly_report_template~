@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: weekly report
+# key: <we
+# --
+From: "Agrawal, Ankit" <ankit.agrawal@rakuten.com>
+To: ankit.agrawal@rakuten.com
+Subject: [Weekly Report] RMJP: Ankit Agrawal
+--text follows this line--
+<#part type="text/html" disposition=inline>
+$0
+<#/part>

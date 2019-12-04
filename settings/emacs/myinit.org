@@ -1,18 +1,38 @@
 #+STARTUP: overview
+* Set TLS settings
+#+BEGIN_SRC emacs-lisp
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+#+END_SRC
+
+
 * Remove startup messages and status line windows
 #+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
-(menu-bar-mode -1)
-;;(toggle-scroll-bar -1)
-(tool-bar-mode -1)
-(setq-default mode-line-format nil)
-(setq initial-scratch-message ";; Hello Ankit!")
+  (setq inhibit-startup-message t)
+  (menu-bar-mode -1)
+  ;(toggle-scroll-bar -1)
+  (tool-bar-mode -1)
+  (setq-default mode-line-format nil)
+  (setq initial-scratch-message ";; Hello Ankit!")
+  (set-frame-parameter nil 'fullscreen 'fullboth)
 
-;;change all prompts to y or n
-(fset 'yes-or-no-p 'y-or-n-p)
+  ;; (use-package eterm-256color
+  ;; :ensure t)
 
-;;follow symlinks
-(setq vc-follow-symlinks t)
+  ;; (use-package xterm-color
+  ;; :ensure t)
+  ;; (add-hook 'term-mode-hook #'eterm-256color-mode)
+
+  ;;change all prompts to y or n
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  ;;follow symlinks
+  (setq vc-follow-symlinks t)
+  
+;; testing shell clear settings
+(add-hook 'comint-mode-hook
+          (defun rm-comint-postoutput-scroll-to-bottom ()
+            (remove-hook 'comint-output-filter-functions
+                         'comint-postoutput-scroll-to-bottom)))
 #+END_SRC
 
 
@@ -23,7 +43,14 @@
 (global-set-key (kbd "C-x p") 'find-file-at-point)
 (global-set-key [(meta shift-up)] 'move-line-up)
 (global-set-key [(meta shift-down)] 'move-line-down)
+(global-set-key (kbd "C-c d") (lambda () (interactive) (insert "(/)")))
+(global-set-key (kbd "C-c i") (lambda () (interactive) (insert "(on)")))
 #+END_SRC
+
+#+RESULTS:
+| lambda | nil | (interactive) | (insert (on)) |
+
+
 
 * Initialize package and install a package installer helper
 #+BEGIN_SRC emacs-lisp
@@ -279,10 +306,15 @@
 
 * Theme/icons related setting 
 #+BEGIN_SRC emacs-lisp
- (load-theme 'tango-dark t) 
-  (use-package all-the-icons
-  :ensure t)
- (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+(use-package powerline
+:ensure t)
+(powerline-center-evil-theme)
+
+(load-theme 'tango-dark t) 
+ (use-package all-the-icons
+ :ensure t)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 #+END_SRC 
 
 * Reveal js
@@ -319,9 +351,14 @@
 
 * mu4e Mailing stuffs
 #+BEGIN_SRC emacs-lisp
-;;(use-package org-mime
-;;  :ensure t)
-;;(load-file "~/config-files/settings/emacs/mu4econfig.el")
+(use-package org-mime
+  :ensure t)
+(load-file "~/config-files/settings/emacs/mu4econfig.el")
+#+END_SRC
+
+* Processes handling
+#+BEGIN_SRC emacs-lisp
+(load-file "~/config-files/settings/emacs/process.el")
 #+END_SRC
 
 
@@ -480,10 +517,11 @@ version 2018-07-03"
 
 * Adding terminal zsh
 #+BEGIN_SRC emacs-lisp
-(use-package multi-term
-:ensure t)
-(setq multi-term-program "/bin/zsh")
-(global-set-key (kbd "<f9>") 'multi-term)
+  (use-package multi-term
+  :ensure t)
+  (setq multi-term-program "/usr/local/bin/fish")
+  ;; (setq multi-term-program "/bin/zsh")
+  (global-set-key (kbd "<f9>") 'multi-term)
 
 #+END_SRC
 
@@ -536,7 +574,7 @@ version 2018-07-03"
 
 - Enabling oauth2
 #+BEGIN_SRC emacs-lisp
-(load-file "~/config-files/settings/emacs/mu4econfig.el")
+;;(load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
 
 - Installing request package for emacs
@@ -581,3 +619,62 @@ version 2018-07-03"
 :ensure t)
 #+END_SRC
 
+
+* Rest client Emacs
+
+#+BEGIN_SRC emacs-lisp
+(use-package restclient
+:ensure t)
+
+(use-package company-restclient
+:ensure t
+:config
+(add-to-list 'company-backends 'company-restclient))
+#+END_SRC
+
+
+* Copy into mac clipboard
+#+BEGIN_SRC emacs-lisp
+(defun pbcopy (&optional b e) 
+  (interactive "r")
+  (shell-command-on-region b e "pbcopy"))
+#+END_SRC
+
+
+
+
+* Yasnippets
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :init
+  ;;(setq yas-snippet-dirs '( "~/.emacs.d/snippets/test/" ))
+    (yas-global-mode 1))
+
+(use-package yasnippet-snippets
+  :ensure t)
+#+END_SRC
+
+
+
+* Github markdown
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-toc
+  :ensure t)
+#+END_SRC
+
+
+
+
+* json mode
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+  :ensure t)
+#+END_SRC
+
+
+* Url encode/decode
+#+BEGIN_SRC emacs-lisp
+(use-package urlenc
+  :ensure t)
+#+END_SRC
