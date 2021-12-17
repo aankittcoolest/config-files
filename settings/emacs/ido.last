@@ -1,0 +1,33 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/ankit.agrawal/" . "config-files/")
+ ("/Users/ankit.agrawal/config-files/settings/" . "emacs/")
+ ("/Users/ankit.agrawal/config-files/" . "settings/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/ankit.agrawal/config-files/settings/emacs/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "myinit.org"
+ "myinit.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/ankit.agrawal/config-files/settings/emacs/" (24556 8840 827358 12000) "org-export.el" "process.el" "myinit.org" "emojis/" "elpa/" "ox-confluence.el" "init.el" "org-export-generic.el" "auto-save-list/" "org-confluence.el" "edit-server.el" "var/" "transient/" "projectile-bookmarks.eld" "ido.last~" "myinit.el" "todo_template.sh" "ido.last" "mu4econfig.el" "snippets/" "ac-comphist.dat" "../" "./")
+
+ ("/Users/ankit.agrawal/" (24556 8837 135465 778000) ".account" ".zcompdump-RINMAC912-5.7.1" ".conda/" ".bookmarks" ".viminfo" ".bash_history" "elasticsearch/" ".Box_StreemToSync" ".rndebuggerrc" ".putty/" ".mume/" "dtdc/" ".gitconfig" ".aws/" "brijwasi_cylinders_bak" ".cache/" ".python_history" "Downloads/" ".oh-my-zsh/" "AndroidStudioProjects/" ".gem/" ".bash_profile" ".m2/" ".vscode/" ".mysql_history" ".vimbackup/" ".rcp_aliases" ".vimrc.before" ".anydesk/" "Documents/" ".terraform.d/" ".npm/" ".zcompdump" ".jupyter/" "Maildir/" ".aliases.sh" ".react-native-cli/" ".Trash/" "rcp-one/" ".vimrc.before.local" ".Box_EngineServer" ".php_cs.cache" ".gradle/" ".dbshell" "Applications/" ".vimrc" ".vimviews/" "Movies/" ".ssh/" ".babel.7.9.6.development.json" ".anaconda/" "scripts/" ".cisco/" "java-projects/" ".kube/" ".zshenv" "kafka_2.13-2.7.0.tgz" ".bash_aliases" "temporary/" "notes/" ".ideavimrc" "Public/" "state_management/" "brijwasi_cylinders" ".sqlite_history" ".vimrc.local" ".helm/" "config-files/" ".bash_sessions/" ".cups/" ".p10k.zsh" ".cocoapods/" ".dlv/" ".android/" ".node_repl_history" ".emacs.d/" ".minikube/" ".emulator_console_auth_token" "-" ".mbsyncrc" ".oracle_jre_usage/" ".lesshst" "kafka_2.13-2.7.0/" ".matplotlib/" "Library/" "Desktop/" ".vs-kubernetes/" ".ipython/" ".p2/" ".zsh_history" ".boto" "node-projects/" ".bundle/" ".Box_SyncToStreem" ".authinfo" ".shell.pre-oh-my-zsh" ".zshrc.backup" "Pictures/" ".local/" "43042_nmerchandis20200829.txt.1598817978846" ".zshrc" ".mu/" ".bashrc" "golang/" ".spf13-vim-3/" ".subversion/" ".netrc" ".vagrant.d/" ".vimswap/" ".tooling/" ".wget-hsts" "test/" ".CFUserTextEncoding" ".rcp-setup.log" ".vault-token" ".gnupg/" ".Box_UIServer" ".DS_Store" "Box/" ".cf/" ".vim/" ".anyconnect" ".gsutil/" ".docker/" ".condarc" ".vimundo/" ".expo/" ".rest-client/" "Music/" "terraform/" "rcp/" ".config/" ".eclipse/" "feed-testing/" ".vimrc.bundles" "../" "./")
+
+ ("/Users/ankit.agrawal/config-files/settings/" (24556 7930 926996 565000) "phpstorm/" "emacs/" "conemu/" "../" "./")
+
+ ("/Users/ankit.agrawal/config-files/" (24556 7930 927624 157000) "desktop_shortcut_scripts/" "aliases/" ".git/" "tmux/" "scripts/" ".gitignore" "notes/" "README.md" "settings/" "vim/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

@@ -1,8 +1,11 @@
 #+STARTUP: overview
+
 * Set TLS settings
 #+BEGIN_SRC emacs-lisp
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
+
+
 
 
 * Remove startup messages and status line windows
@@ -52,13 +55,20 @@
 
 
 
+* Export from org mode to git markdown mode
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-gfm
+  :ensure t)
+
+#+END_SRC
+
 * Initialize package and install a package installer helper
 #+BEGIN_SRC emacs-lisp
-(package-initialize)
+;;(package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
 #+END_SRC
 
 
@@ -100,8 +110,11 @@
    :ensure t)
 #+END_SRC
 
-#+RESULTS:
-: t
+#+BEGIN_SRC emacs-lisp
+(require 'org-tempo)
+#+END_SRC
+
+
 
 
 * Utility packages for faster moving around
@@ -134,9 +147,6 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode 1))
-
-  (use-package evil-magit
-  :ensure t)
 
 (use-package evil-collection
   :after evil
@@ -300,7 +310,14 @@
 ;;install dired narrow
   (use-package dired-hacks-utils
   :ensure t)
+  
+;; Dired mac related settings
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired t
+        insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches "-aBhl --group-directories-first"))
 #+END_SRC
+
 
 
 
@@ -326,19 +343,6 @@
   (setq org-reveal-mathjax t)
 #+END_SRC
 
-#+RESULTS:
-: t
-
-
-* Atomic chrome
-#+BEGIN_SRC emacs-lisp
-(require 'atomic-chrome)
-(atomic-chrome-start-server)
-;;  (setq atomic-chrome-server-ghost-text-port 4002)
-  ;; (setq atomic-chrome-default-major-mode 'markdown-mode)
-#+END_SRC
-
-
 * Projectile (fuzzy-search)
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
@@ -351,9 +355,9 @@
 
 * mu4e Mailing stuffs
 #+BEGIN_SRC emacs-lisp
-(use-package org-mime
-  :ensure t)
-(load-file "~/config-files/settings/emacs/mu4econfig.el")
+;;(use-package org-mime
+;;  :ensure t)
+;;(load-file "~/config-files/settings/emacs/mu4econfig.el")
 #+END_SRC
 
 * Processes handling
@@ -509,12 +513,6 @@ version 2018-07-03"
 
 
 
-* Confluence specific settings
-#+BEGIN_SRC emacs-lisp
-(load-file "~/config-files/settings/emacs/ox-confluence.el")
-#+END_SRC
-
-
 * Adding terminal zsh
 #+BEGIN_SRC emacs-lisp
   (use-package multi-term
@@ -551,9 +549,11 @@ version 2018-07-03"
 
 * org-mode addons
 #+BEGIN_SRC emacs-lisp
-(use-package ox-jira
-:ensure t)
+;;(use-package ox-jira
+;;:ensure t)
 #+END_SRC
+
+#+RESULTS:
 
 
 
@@ -678,3 +678,20 @@ version 2018-07-03"
 (use-package urlenc
   :ensure t)
 #+END_SRC
+
+* Confluence/JIRA specific settings
+#+BEGIN_SRC emacs-lisp
+(load-file "~/config-files/settings/emacs/ox-confluence.el")
+(load-file "~/config-files/settings/emacs/ox-jira.el")
+#+END_SRC
+
+
+* Doom line
+
+#+begin_src emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+#+end_src
+
+#+RESULTS:
