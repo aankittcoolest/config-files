@@ -28,10 +28,12 @@
  ;; If there is more than one, they won't work right.
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(package-selected-packages
-   '(urlenc json-mode markdown-toc yasnippet-snippets yasnippet company-restclient restclient load-theme-buffer-local slack websocket request circe ox-jira magit multi-term emojify projectile ox-reveal all-the-icons powerline dired-hacks-utils unicode-fonts auto-dictionary auto-complete key-chord neotree evil-magit evil ace-jump-mode ace-window htmlize org-bullets which-key try use-package)))
+   '(evil-leader paredit-everywhere rust-mode org-tree-slide epresent org-re-reveal urlenc json-mode markdown-toc yasnippet-snippets yasnippet company-restclient restclient load-theme-buffer-local slack websocket request circe ox-jira magit multi-term emojify projectile ox-reveal all-the-icons powerline dired-hacks-utils unicode-fonts auto-dictionary auto-complete key-chord neotree evil-magit evil ace-jump-mode ace-window htmlize org-bullets which-key try use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+(put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)

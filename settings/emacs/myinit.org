@@ -8,6 +8,13 @@
 
 
 
+* Indenting issue
+
+#+begin_src emacs-lisp
+(setq org-src-preserve-indentation nil 
+      org-edit-src-content-indentation 0)
+#+end_src
+
 * Remove startup messages and status line windows
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
@@ -172,6 +179,35 @@
   (setq key-chord-two-keys-delay 0.5)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
   (key-chord-mode 1)
+
+;; install evil-leader
+(use-package evil-leader
+  :ensure t)
+
+;; install evil-leader
+(use-package evil-leader
+  :ensure t)
+(evil-leader/set-leader ",")
+
+;; Emacs key bindings
+(global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
+(global-set-key (kbd "C-c l") 'evilnc-quick-comment-or-uncomment-to-the-line)
+(global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
+(global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
+
+(global-evil-leader-mode)
+(evil-leader/set-key
+  "ci" 'evilnc-comment-or-uncomment-lines
+  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cc" 'evilnc-copy-and-comment-lines
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "cv" 'evilnc-toggle-invert-comment-line-by-line
+  "."  'evilnc-copy-and-comment-operator
+  "\\" 'evilnc-comment-operator ; if you prefer backslash key
+)
+
   
 #+END_SRC
 
@@ -339,9 +375,16 @@
   (use-package ox-reveal
   :ensure t)
 
+  (use-package epresent
+  :ensure t)
+
+  (use-package org-tree-slide
+  :ensure t)
+
   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
   (setq org-reveal-mathjax t)
 #+END_SRC
+
 
 * Projectile (fuzzy-search)
 #+BEGIN_SRC emacs-lisp
@@ -521,6 +564,10 @@ version 2018-07-03"
   ;; (setq multi-term-program "/bin/zsh")
   (global-set-key (kbd "<f9>") 'multi-term)
 
+  (defun my-comint-init ()
+      (setq comint-process-echoes t))
+    (add-hook 'comint-mode-hook 'my-comint-init)
+
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -685,7 +732,6 @@ version 2018-07-03"
 (load-file "~/config-files/settings/emacs/ox-jira.el")
 #+END_SRC
 
-
 * Doom line
 
 #+begin_src emacs-lisp
@@ -695,3 +741,24 @@ version 2018-07-03"
 #+end_src
 
 #+RESULTS:
+
+
+* Rust config
+
+#+begin_src emacs-lisp
+(use-package rust-mode
+  :ensure t
+  :init
+  (setq rust-format-on-save t)
+)
+#+end_src
+
+
+
+
+
+* Ido mode improvements
+
+#+begin_src emacs-lisp
+(setq ido-auto-merge-work-directories-length -1)
+#+end_src
